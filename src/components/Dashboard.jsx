@@ -6,7 +6,7 @@ import Filter from "../components/Filter";
 const Dashboard = () => {
   return (
     <div>
-      <Grid>
+      <Grid columns='equal'>
         <Grid.Row>
           <Grid.Column width={4}>
             <Filter />

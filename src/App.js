@@ -2,6 +2,7 @@ import { Container } from "semantic-ui-react";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Navigate from "./components/Navigate.jsx";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Container className="main">
         <Dashboard />
       </Container>
+      <Footer />
     </div>
   );
 }
