@@ -3,6 +3,7 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Navigate from "./components/Navigate.jsx";
 import Footer from "./components/Footer";
+import "rsuite/dist/styles/rsuite-default.css";
 
 function App() {
   return (

@@ -1,22 +1,25 @@
 import React from "react";
-import { Button, Menu } from "semantic-ui-react";
+import { Navbar, Icon, Nav } from "rsuite";
 
 const Navigate = () => {
   return (
-    <div>
-      <Menu color={"violet"} inverted size="large">
-        <span style={{ color: "white", fontSize: 19, marginTop: "0.8em", marginLeft: "10px" }}>
+    <Navbar>
+      <Navbar.Header>
+        <a href="#" className="navbar-brand logo">
           HRMS
-        </span>
-        <Menu.Menu position="right">
-          <Menu.Item name="İş İlanları" />
-          <Menu.Item name="İşverenler" />
-          <Menu.Item>
-            <Button white>Üye ol</Button>
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
-    </div>
+        </a>
+      </Navbar.Header>
+      <Navbar.Body>
+        <Nav>
+          <Nav.Item icon={<Icon icon="briefcase" size="lg" />}>İşler</Nav.Item>
+          <Nav.Item icon={<Icon icon="peoples" size="lg" />}>İşverenler</Nav.Item>
+        </Nav>
+        <Nav pullRight>
+          <Nav.Item icon={<Icon icon="user-circle" size="lg" />}>Giriş Yap</Nav.Item>
+          <Nav.Item className="nav-item">Kayıt Ol</Nav.Item>
+        </Nav>
+      </Navbar.Body>
+    </Navbar>
   );
 };
 

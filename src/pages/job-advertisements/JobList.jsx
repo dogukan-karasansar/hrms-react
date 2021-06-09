@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Icon, Item, Label } from "semantic-ui-react";
+import { Row, Col, Panel, Tooltip } from "rsuite";
 import JobAdvertisementService from "../../services/job-advertisements/JobAdvertisementService";
 
 export default function JobList() {
@@ -13,31 +13,21 @@ export default function JobList() {
   }, []);
 
   return (
-    <Item.Group>
-      {jobs.map((jobs) => (
-        <Item style={{ border: "0.3md solid black", padding: "5px" }}>
-          <Item.Image src="https://i.sozcu.com.tr/wp-content/uploads/2019/02/iecrop/shutterstock_1075610606_16_9_1550120804-880x495.jpg" />
-
-          <Item.Content>
-            <Item.Header as="a">{jobs.employer.companyName}</Item.Header>
-            <Item.Meta>
-              <span className="cinema">{jobs.city.cityName}</span>
-            </Item.Meta>
-            <Item.Description>
-              {
-                jobs.description
-              }
-            </Item.Description>
-            <Item.Extra>
-              <Button primary floated="right">
-                Detay
-                <Icon name="right chevron" />
-              </Button>
-              <Label>{jobs.jobPosition.positionName}</Label>
-            </Item.Extra>
-          </Item.Content>
-        </Item>
+    <Row>
+      {jobs.map((job) => (
+        <a href="#">
+          <Col key={job.id} style={{ margin: 10 }} md={24} sm={12}>
+            <Panel bordered header={job.employer.companyName}>
+              <p style={{ color: "black" }}>{job.description}</p>
+              <div style={{ height: 20, margin: 15 }}>
+                <Tooltip visible>
+                  <i>{job.jobPosition.positionName}</i>
+                </Tooltip>
+              </div>
+            </Panel>
+          </Col>
+        </a>
       ))}
-    </Item.Group>
+    </Row>
   );
 }

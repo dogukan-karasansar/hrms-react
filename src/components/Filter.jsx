@@ -1,37 +1,55 @@
-import React from "react";
-import { Dropdown, Icon, Input, Menu } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Nav, Sidenav, Dropdown, Icon } from "rsuite";
+import CityService from "../services/citys/CityService";
+import JobPositionService from "../services/job-position/JobPositionService";
 
 export default function Filter() {
+  const [citys, setCitys] = useState([]);
+  const [jobPositions, setJobPositions] = useState([]);
+  useEffect(() => {
+    let cityService = new CityService();
+    let jobPositionService = new JobPositionService();
+    cityService.getCitys().then((res) => setCitys(res.data.data));
+    jobPositionService
+      .getJobPositions()
+      .then((res) => setJobPositions(res.data.data));
+  }, []);
+  console.log(jobPositions);
   return (
-    <div>
-      <Menu vertical>
-        <Menu.Item>
-          <Input placeholder="Search..." />
-        </Menu.Item>
+    <div style={{ width: 250 }}>
+      <Sidenav activeKey="1">
+        <Sidenav.Body>
+          <Nav>
+            <Nav.Item eventKey="1" icon={<Icon icon="filter" />}>
+              Filtrele
+            </Nav.Item>
 
-        <Menu.Item>
-          Home
-          <Menu.Menu>
-            <Menu.Item name="search">Search</Menu.Item>
-            <Menu.Item name="add">Add</Menu.Item>
-            <Menu.Item name="about">Remove</Menu.Item>
-          </Menu.Menu>
-        </Menu.Item>
+            <Dropdown
+              eventKey="2"
+              title="Şehirler"
+              icon={<Icon icon="globe2" />}
+            >
+              {citys.map((city) => (
+                <Dropdown.Item key={city.id} eventKey={'"3-' + city.id + '"'}>
+                  {city.cityName}
+                </Dropdown.Item>
+              ))}
+            </Dropdown>
 
-        <Menu.Item name="browse">
-          <Icon name="grid layout" />
-          Browse
-        </Menu.Item>
-        <Menu.Item name="messages">Messages</Menu.Item>
-
-        <Dropdown item text="More">
-          <Dropdown.Menu>
-            <Dropdown.Item icon="edit" text="Edit Profile" />
-            <Dropdown.Item icon="globe" text="Choose Language" />
-            <Dropdown.Item icon="settings" text="Account Settings" />
-          </Dropdown.Menu>
-        </Dropdown>
-      </Menu>
+            <Dropdown
+              eventKey="3"
+              title="Pozisyon"
+              icon={<Icon icon="vcard-o" />}
+            >
+              {jobPositions.map((job) => (
+                <Dropdown.Item key={job.id} eventKey={'"3-' + job.id + '"'}>
+                  {job.positionName}
+                </Dropdown.Item>
+              ))}
+            </Dropdown>
+          </Nav>
+        </Sidenav.Body>
+      </Sidenav>
     </div>
   );
 }
