@@ -17,3 +17,7 @@
   margin: 20px;
 }
 
+.jobs-card:hover {
+  opacity: 0.8;
+}
+

@@ -6,13 +6,19 @@ const Footer = () => {
       style={{
         position: "fixed",
         bottom: 0,
-        left: '50%',
-        textAlign: "center",
+        alignItems: "center",
         fontSize: 14,
-        alignItems: 'center'
+        backgroundColor: "#282c35",
+        width: "100%",
+        textAlign: "center",
+        padding: 15,
+        borderTopLeftRadius: 2,
+        borderTopRightRadius: 2,
       }}
     >
-      <p>2021 © HRMS SİSTEMİ</p>
+      <p style={{ color: "white" }}>
+        Develop by Doğukan Karasansar 2021 © HRMS SİSTEMİ
+      </p>
     </div>
   );
 };
