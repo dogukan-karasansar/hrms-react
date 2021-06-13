@@ -14,13 +14,13 @@ export default function Filter() {
       .getJobPositions()
       .then((res) => setJobPositions(res.data.data));
   }, []);
-  console.log(jobPositions);
+
   return (
     <div style={{ width: 250 }}>
       <Sidenav activeKey="1">
         <Sidenav.Body>
           <Nav>
-            <Nav.Item eventKey="1" icon={<Icon icon="filter" />}>
+            <Nav.Item id="filter" eventKey="1" icon={<Icon icon="filter" />}>
               Filtrele
             </Nav.Item>
 

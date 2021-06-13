@@ -1,28 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { Navbar, Icon, Nav } from "rsuite";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
 
-const Navigate = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+export default function Navigate() {
+  const history = useHistory();
+  var id = localStorage.getItem("userId");
+
+  function handleSignOut() {
+    localStorage.removeItem("userId");
+    history.push("/");
+    window.location.reload();
+  }
+
   return (
     <Navbar>
       <Navbar.Header>
-        <a href="!#" className="navbar-brand logo">
+        <Link to={"/"} className="navbar-brand logo">
           HRMS
-        </a>
+        </Link>
       </Navbar.Header>
       <Navbar.Body>
         <Nav>
-          <Nav.Item icon={<Icon icon="briefcase" size="lg" />}>İşler</Nav.Item>
-          <Nav.Item icon={<Icon icon="peoples" size="lg" />}>
-            İşverenler
-          </Nav.Item>
+          <Link to={"/isler"}>
+            <Nav.Item icon={<Icon icon="briefcase" size="lg" />}>
+              İşler
+            </Nav.Item>
+          </Link>
+          <Link to={"/isverenler"}>
+            <Nav.Item icon={<Icon icon="peoples" size="lg" />}>
+              İşverenler
+            </Nav.Item>
+          </Link>
         </Nav>
-        <Nav pullRight>{isAuthenticated ? <SignedIn /> : <SignedOut />}</Nav>
+        <Nav pullRight>
+          {id ? <SignedIn signOut={handleSignOut} /> : <SignedOut />}
+        </Nav>
       </Navbar.Body>
     </Navbar>
   );
-};
-
-export default Navigate;
+}
