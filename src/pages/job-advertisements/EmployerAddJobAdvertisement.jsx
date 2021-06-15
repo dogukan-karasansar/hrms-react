@@ -207,6 +207,7 @@ export default function EmployerAddJobAdvertisement() {
             <ControlLabel>Bitiş Tarihi</ControlLabel>
             <div style={styles}>
               <DatePicker
+                oneTap
                 format="YYYY-MM-DD"
                 value={deadline}
                 onChange={(value) => setdeadline(value)}

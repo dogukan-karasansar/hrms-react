@@ -1,12 +1,17 @@
 import axios from "axios";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
 import { Alert } from "rsuite";
 
 export default class JobAdvertisement {
   getJobAdvertisements = () => {
     return axios.get(
       "http://localhost:90/api/job-advertisement/activated-job-advertisements"
+    );
+  };
+
+  getJobAdvertisement = (id) => {
+    return axios.get(
+      "http://localhost:90/api/job-advertisement/getjobadvertisement?id=" + id
     );
   };
 
@@ -47,7 +52,7 @@ export default class JobAdvertisement {
         return true;
       })
       .catch((e) => {
-        Alert.error("Bir hata oluştu lütfen daha sonra tekrar deneyin!" );
+        Alert.error("Bir hata oluştu lütfen daha sonra tekrar deneyin!");
         console.log(e);
       });
   };
