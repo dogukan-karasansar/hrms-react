@@ -6,6 +6,7 @@ export default function SignedIn({ signOut }) {
   let checkImage = false;
 
   const userType = localStorage.getItem("userType");
+  const userName = localStorage.getItem("userName");
 
   return (
     <div style={{ position: "fixed", right: 50, marginTop: -10 }}>
@@ -15,7 +16,7 @@ export default function SignedIn({ signOut }) {
           checkImage ? (
             <Avatar src="https://avatars2.githubusercontent.com/u/12592949?s=460&v=4" />
           ) : (
-            <Avatar src="https://404.error" alt="DK" />
+            <Avatar src="https://404.error" alt={userName.slice(0, 2)} />
           )
         }
       >

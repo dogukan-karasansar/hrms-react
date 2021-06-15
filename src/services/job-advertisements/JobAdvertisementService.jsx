@@ -1,4 +1,7 @@
 import axios from "axios";
+import moment from "moment";
+import { useHistory } from "react-router-dom";
+import { Alert } from "rsuite";
 
 export default class JobAdvertisement {
   getJobAdvertisements = () => {
@@ -7,29 +10,45 @@ export default class JobAdvertisement {
     );
   };
 
-  add = (id) => {
+  add = (
+    id,
+    description,
+    minimumSalary,
+    maximumSalary,
+    typeOfWork,
+    runtime,
+    deadline,
+    numberOfOpenPosition,
+    city,
+    position
+  ) => {
     return axios
       .post("http://localhost:90/api/job-advertisement/add", {
         activated: false,
-        applicationDeadline: "2020-08-14",
+        applicationDeadline: moment(deadline).format("YYYY-MM-DD"),
         city: {
-          id: 1,
+          id: city,
         },
-        description: "description",
+        description: description,
         employer: {
           id: id,
         },
-        phone: "05304604889",
         jobPosition: {
-          id: 1,
+          id: position,
         },
-        maximumSalary: 0,
-        minimumSalary: 0,
-        numberOfOpenPosition: 2,
-        runtime: "Tam Zamanlı",
-        typeOfWork: "Uzaktan",
+        maximumSalary: maximumSalary,
+        minimumSalary: minimumSalary,
+        numberOfOpenPosition: numberOfOpenPosition,
+        runtime: runtime,
+        typeOfWork: typeOfWork,
       })
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+      .then((res) => {
+        Alert.success("İş ilanı başarıyla eklendi");
+        return true;
+      })
+      .catch((e) => {
+        Alert.error("Bir hata oluştu lütfen daha sonra tekrar deneyin!" );
+        console.log(e);
+      });
   };
 }

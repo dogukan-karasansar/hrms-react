@@ -36,7 +36,8 @@ const Login = () => {
   function login(email, password) {
     let loginService = new LoginService();
     loginService.login(email, password).then((result) => {
-      localStorage.setItem("userId", result.data.data.id);
+      localStorage.setItem("userId", result.data.data.user.id);
+      localStorage.setItem("userName", result.data.data.user.email)
       if (result.data.data.companyName) {
         localStorage.setItem("userType", "employer");
       } else if (result.data.data.nationalIdentity) {

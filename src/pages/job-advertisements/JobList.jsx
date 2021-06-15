@@ -16,9 +16,9 @@ export default function JobList() {
   }, []);
 
   return (
-    <Grid>
-      <Grid.Row>
-        <Grid.Column width={4}>
+    <Grid >
+      <Grid.Row style={{marginBottom: 100}}>
+        <Grid.Column style={{marginTop: 10}} width={4}>
           <Filter />
         </Grid.Column>
         <Grid.Column width={12}>
