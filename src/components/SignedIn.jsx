@@ -23,7 +23,7 @@ export default function SignedIn({ signOut }) {
         <Dropdown.Item icon={<Icon icon="info" />}>Bilgilerim</Dropdown.Item>
         {userType === "employer" ? (
           <>
-            <Link to={"ilanlarım"}>
+            <Link to={"ilanlarim"}>
               <Dropdown.Item icon={<Icon icon="list" />}>
                 İlanlarım
               </Dropdown.Item>

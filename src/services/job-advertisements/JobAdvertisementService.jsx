@@ -15,6 +15,13 @@ export default class JobAdvertisement {
     );
   };
 
+  getEmployerJobAdvertisements = (id) => {
+    return axios.get(
+      "http://localhost:90/api/job-advertisement/geta-employer-job-advertisements?employerId=" +
+        id
+    );
+  };
+
   add = (
     id,
     description,

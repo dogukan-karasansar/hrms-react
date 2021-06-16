@@ -25,7 +25,7 @@ const Dashboard = () => {
             />
             <Route
               exact
-              path="/ilanlarım"
+              path="/ilanlarim"
               component={EmployerJobAdvertisements}
             />
             <Route path="/isler/:id" component={JobDetails} />
