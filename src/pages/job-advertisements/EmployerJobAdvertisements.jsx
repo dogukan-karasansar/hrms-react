@@ -19,15 +19,13 @@ export default function EmployerJobAdvertisements() {
         })
     );
   }, []);
-  console.log(employerJobAdvertisments);
+
   return (
     <div>
       <Table
         height={400}
         data={employerJobAdvertisments}
-        onRowClick={(data) => {
-          console.log(data);
-        }}
+        onRowClick={(data) => {}}
       >
         <Column width={100} align="center" fixed>
           <HeaderCell>Durum</HeaderCell>
