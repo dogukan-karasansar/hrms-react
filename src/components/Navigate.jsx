@@ -17,7 +17,6 @@ export default function Navigate() {
     history.push("/");
   }
 
-
   return (
     <Navbar>
       <Navbar.Header>

@@ -6,10 +6,7 @@ import { Avatar, Dropdown, Icon } from "rsuite";
 export default function SignedIn({ signOut }) {
   let checkImage = false;
 
-  const userType = localStorage.getItem("userType");
-
   const { userItem } = useSelector((state) => state.user);
-
 
   return (
     <div style={{ position: "relative", right: 50, marginTop: -10 }}>
@@ -27,7 +24,7 @@ export default function SignedIn({ signOut }) {
         }
       >
         <Dropdown.Item icon={<Icon icon="info" />}>Bilgilerim</Dropdown.Item>
-        {userType === "employer" ? (
+        {userItem[0].userType === "employer" ? (
           <>
             <Link to={"ilanlarim"}>
               <Dropdown.Item icon={<Icon icon="list" />}>
@@ -40,7 +37,7 @@ export default function SignedIn({ signOut }) {
               </Dropdown.Item>
             </Link>
           </>
-        ) : userType === "jobSeeker" ? (
+        ) : userItem[0].userType === "jobSeeker" ? (
           <Dropdown.Item icon={<Icon icon="info" />}>
             Başvurularım
           </Dropdown.Item>

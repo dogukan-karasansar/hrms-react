@@ -6,10 +6,18 @@ const initState = { userItem: userItem };
 export default function userReducer(state = initState, { type, payload }) {
   switch (type) {
     case LOGIN_USER:
-      return {
-        ...state,
-        userItem: [...state.userItem, { user: payload }],
-      };
+      let type = payload.companyName
+        ? "employer"
+        : payload.nationalIdentity
+        ? "jobSeeker"
+        : "systemPersonel";
+
+      if (type) {
+        return {
+          ...state,
+          userItem: [...state.userItem, { userType: type, user: payload }],
+        };
+      }
 
     case LOGOUT_USER:
       return {

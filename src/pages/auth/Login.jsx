@@ -41,13 +41,6 @@ const Login = () => {
     let loginService = new LoginService();
     loginService.login(email, password).then((result) => {
       dispatch(loginUser(result.data.data));
-      if (result.data.data.companyName) {
-        localStorage.setItem("userType", "employer");
-      } else if (result.data.data.nationalIdentity) {
-        localStorage.setItem("userType", "jobSeeker");
-      } else {
-        localStorage.setItem("userType", "systemPersonel");
-      }
       history.push("/");
     });
   }
