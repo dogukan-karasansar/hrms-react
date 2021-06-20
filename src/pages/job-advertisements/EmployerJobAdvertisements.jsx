@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Table, Badge } from "rsuite";
 import EmployerService from "../../services/employer/EmployerService";
 import JobAdvertisementService from "../../services/job-advertisements/JobAdvertisementService";
@@ -7,11 +8,12 @@ const { Column, HeaderCell, Cell } = Table;
 
 export default function EmployerJobAdvertisements() {
   const [employerJobAdvertisments, setemployerJobAdvertisments] = useState([]);
+  const { userItem } = useSelector((state) => state.user);
 
   useEffect(() => {
     let employerService = new EmployerService();
     let jobAdvertisementService = new JobAdvertisementService();
-    employerService.getEmployer(localStorage.getItem("userId")).then((res) =>
+    employerService.getEmployer(userItem[0].user.user.id).then((res) =>
       jobAdvertisementService
         .getEmployerJobAdvertisements(res.data.data.id)
         .then((res) => {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   Whisper,
@@ -17,7 +18,6 @@ import {
   Button,
 } from "rsuite";
 import CityService from "../../services/citys/CityService";
-import EmployerService from "../../services/employer/EmployerService";
 import JobAdvertisementService from "../../services/job-advertisements/JobAdvertisementService";
 import JobPositionService from "../../services/job-position/JobPositionService";
 export default function EmployerAddJobAdvertisement() {
@@ -27,7 +27,6 @@ export default function EmployerAddJobAdvertisement() {
   };
 
   const history = useHistory();
-  const [employer, setEmployer] = useState([]);
   const [citys, setCitys] = useState([]);
   const [positions, setpositions] = useState([]);
   const [description, setDescription] = useState("");
@@ -39,7 +38,8 @@ export default function EmployerAddJobAdvertisement() {
   const [numberOfOpenPosition, setnumberOfOpenPosition] = useState(0);
   const [city, setcity] = useState(null);
   const [position, setposition] = useState(null);
-  const [employerId, setemployerId] = useState(null);
+
+  const { userItem } = useSelector((state) => state.user);
 
   useEffect(() => {
     let cityService = new CityService();
@@ -48,11 +48,6 @@ export default function EmployerAddJobAdvertisement() {
     positionService
       .getJobPositions()
       .then((res) => setpositions(res.data.data));
-    let employerService = new EmployerService();
-    employerService.getEmployer(localStorage.getItem("userId")).then((res) => {
-      setEmployer(res.data.data);
-      setemployerId(res.data.data.id);
-    });
   }, []);
 
   function addAdvertisement(
@@ -117,11 +112,19 @@ export default function EmployerAddJobAdvertisement() {
         <FlexboxGrid style={{ margin: 15 }} justify="center">
           <FlexboxGrid.Item colspan={8}>
             <ControlLabel>Şirket Ad</ControlLabel>
-            <Input style={styles} value={employer.companyName || ""} disabled />
+            <Input
+              style={styles}
+              value={userItem[0].user.companyName || ""}
+              disabled
+            />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={8}>
             <ControlLabel>Website</ControlLabel>
-            <Input style={styles} value={employer.webSites || ""} disabled />
+            <Input
+              style={styles}
+              value={userItem[0].user.webSites || ""}
+              disabled
+            />
           </FlexboxGrid.Item>
         </FlexboxGrid>
         {/* description
@@ -261,7 +264,7 @@ export default function EmployerAddJobAdvertisement() {
             <Button
               onClick={() =>
                 addAdvertisement(
-                  employerId,
+                  userItem[0].user.id,
                   description,
                   minimumSalary,
                   maximumSalary,

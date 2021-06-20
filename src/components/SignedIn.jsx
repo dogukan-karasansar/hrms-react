@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Icon } from "rsuite";
 
@@ -6,17 +7,22 @@ export default function SignedIn({ signOut }) {
   let checkImage = false;
 
   const userType = localStorage.getItem("userType");
-  const userName = localStorage.getItem("userName");
+
+  const { userItem } = useSelector((state) => state.user);
+
 
   return (
-    <div style={{ position: "fixed", right: 50, marginTop: -10 }}>
+    <div style={{ position: "relative", right: 50, marginTop: -10 }}>
       <Dropdown
         noCaret
         icon={
           checkImage ? (
             <Avatar src="https://avatars2.githubusercontent.com/u/12592949?s=460&v=4" />
           ) : (
-            <Avatar src="https://404.error" alt={userName.slice(0, 2)} />
+            <Avatar
+              src="https://404.error"
+              alt={userItem[0].user.user.email.slice(0, 2)}
+            />
           )
         }
       >

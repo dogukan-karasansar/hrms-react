@@ -1,19 +1,22 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { Navbar, Icon, Nav } from "rsuite";
+import { logoutUser } from "../store/actions/userAction";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
 
 export default function Navigate() {
   const history = useHistory();
-  var id = localStorage.getItem("userId");
+  const { userItem } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   function handleSignOut() {
-    localStorage.removeItem("userId");
+    dispatch(logoutUser(userItem));
     history.push("/");
-    window.location.reload();
   }
+
 
   return (
     <Navbar>
@@ -36,7 +39,11 @@ export default function Navigate() {
           </Link>
         </Nav>
         <Nav pullRight>
-          {id ? <SignedIn signOut={handleSignOut} /> : <SignedOut />}
+          {userItem.length > 0 ? (
+            <SignedIn signOut={handleSignOut} />
+          ) : (
+            <SignedOut />
+          )}
         </Nav>
       </Navbar.Body>
     </Navbar>

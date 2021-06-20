@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   Form,
@@ -10,6 +11,7 @@ import {
   FormControl,
 } from "rsuite";
 import LoginService from "../../services/auth/LoginService";
+import { loginUser } from "../../store/actions/userAction";
 
 const { StringType } = Schema.Types;
 const model = Schema.Model({
@@ -33,11 +35,12 @@ const Login = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const history = useHistory();
+  const dispatch = useDispatch();
+
   function login(email, password) {
     let loginService = new LoginService();
     loginService.login(email, password).then((result) => {
-      localStorage.setItem("userId", result.data.data.user.id);
-      localStorage.setItem("userName", result.data.data.user.email)
+      dispatch(loginUser(result.data.data));
       if (result.data.data.companyName) {
         localStorage.setItem("userType", "employer");
       } else if (result.data.data.nationalIdentity) {
@@ -46,7 +49,6 @@ const Login = () => {
         localStorage.setItem("userType", "systemPersonel");
       }
       history.push("/");
-      window.location.reload();
     });
   }
   return (
