@@ -157,7 +157,7 @@ export default function EmployerAddJobAdvertisement() {
             <ControlLabel>Minimum Maaş</ControlLabel>
             <div style={styles}>
               <InputNumber
-                value={minimumSalary}
+                value={minimumSalary || ""}
                 onChange={(value) => setminimumSalary(value)}
               />
             </div>
@@ -166,7 +166,7 @@ export default function EmployerAddJobAdvertisement() {
             <ControlLabel>Maximum Maaş</ControlLabel>
             <div style={styles}>
               <InputNumber
-                value={maximumSalary}
+                value={maximumSalary || ""}
                 onChange={(value) => setmaximumSalary(value)}
               />
             </div>
@@ -178,7 +178,7 @@ export default function EmployerAddJobAdvertisement() {
             <ControlLabel>Çalışma Tipi</ControlLabel>
             <FormGroup controlId="radioList">
               <RadioGroup
-                value={typeOfWork}
+                value={typeOfWork || ""}
                 onChange={(value) => settypeOfWork(value)}
                 name="radioList"
                 inline
@@ -193,7 +193,7 @@ export default function EmployerAddJobAdvertisement() {
             <ControlLabel>Çalışma Zamanı Tipi</ControlLabel>
             <FormGroup controlId="radioList">
               <RadioGroup
-                value={runtime}
+                value={runtime || ""}
                 onChange={(value) => setRuntime(value)}
                 name="radioList"
                 inline
@@ -212,7 +212,7 @@ export default function EmployerAddJobAdvertisement() {
               <DatePicker
                 oneTap
                 format="YYYY-MM-DD"
-                value={deadline}
+                value={deadline || null}
                 onChange={(value) => setdeadline(value)}
                 block
               />
@@ -222,7 +222,7 @@ export default function EmployerAddJobAdvertisement() {
             <ControlLabel>Bu Pozisyona Alınacak Kişi Sayısı</ControlLabel>
             <div style={styles}>
               <InputNumber
-                value={numberOfOpenPosition}
+                value={numberOfOpenPosition || ""}
                 onChange={(value) => setnumberOfOpenPosition(value)}
               />
             </div>
@@ -235,7 +235,7 @@ export default function EmployerAddJobAdvertisement() {
             <div style={styles}>
               <SelectPicker
                 data={citys}
-                value={city}
+                value={city || ""}
                 valueKey={"id"}
                 labelKey={"cityName"}
                 placeholder={"ŞEHİRLER"}
@@ -249,7 +249,7 @@ export default function EmployerAddJobAdvertisement() {
             <div style={styles}>
               <SelectPicker
                 data={positions}
-                value={position}
+                value={position || ""}
                 valueKey={"id"}
                 labelKey={"positionName"}
                 placeholder={"POZİSYONLAR"}

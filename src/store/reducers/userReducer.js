@@ -12,12 +12,10 @@ export default function userReducer(state = initState, { type, payload }) {
         ? "jobSeeker"
         : "systemPersonel";
 
-      if (type) {
-        return {
-          ...state,
-          userItem: [...state.userItem, { userType: type, user: payload }],
-        };
-      }
+      return {
+        ...state,
+        userItem: [...state.userItem, { userType: type, user: payload }],
+      };
 
     case LOGOUT_USER:
       return {

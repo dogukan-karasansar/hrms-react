@@ -2,7 +2,11 @@ import axios from "axios";
 import moment from "moment";
 import { Alert } from "rsuite";
 
+
+
 export default class JobAdvertisement {
+   
+
   getJobAdvertisements = () => {
     return axios.get(
       "http://localhost:90/api/job-advertisement/activated-job-advertisements"

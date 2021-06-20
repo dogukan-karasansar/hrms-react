@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { FlexboxGrid, Panel, Icon, Divider, Button } from "rsuite";
 import JobAdverTisementService from "../../services/job-advertisements/JobAdvertisementService";
@@ -9,7 +10,8 @@ export default function JobDetails() {
   const [jobPosition, setjobPosition] = useState({});
   const [city, setCity] = useState({});
   let { id } = useParams();
-  let userType = localStorage.getItem("userType");
+  const { userItem } = useSelector((state) => state.user);
+
   useEffect(() => {
     let jobAdvertisementService = new JobAdverTisementService();
     jobAdvertisementService
@@ -79,7 +81,7 @@ export default function JobDetails() {
                 {jobAdvertisement.applicationDeadline}
               </p>
             </div>
-            {userType === "jobSeeker" ? (
+            {userItem.length > 0 && userItem[0].userType === "jobSeeker"? (
               <div style={{ float: "right" }}>
                 <Button style={{}} color="green">
                   <Icon icon="hand-o-right" /> BAŞVUR
