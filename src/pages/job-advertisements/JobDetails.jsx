@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { FlexboxGrid, Panel, Icon, Divider, Button } from "rsuite";
+import { useHistory } from "react-router-dom";
+import { FlexboxGrid, Panel, Icon, Divider, Button, Alert } from "rsuite";
+import ApplicationService from "../../services/applications/ApplicationService";
 import JobAdverTisementService from "../../services/job-advertisements/JobAdvertisementService";
+import { checkApplication } from "../../store/actions/applicationAction";
 
 export default function JobDetails() {
   const [jobAdvertisement, setJobAdvertisement] = useState({});
@@ -11,21 +14,40 @@ export default function JobDetails() {
   const [city, setCity] = useState({});
   let { id } = useParams();
   const { userItem } = useSelector((state) => state.user);
+  const [checkApplication, setCheckApplication] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
-    let jobAdvertisementService = new JobAdverTisementService();
-    jobAdvertisementService
-      .getJobAdvertisement(id)
-      .then((res) => {
-        setJobAdvertisement(res.data.data);
-        setEmployer(res.data.data.employer);
-        setjobPosition(res.data.data.jobPosition);
-        setCity(res.data.data.city);
-      })
-      .catch((e) => {
-        console.log(e);
+    if (userItem.length > 0 && userItem[0].userType === "jobSeeker") {
+      let applicationService = new ApplicationService();
+      applicationService.getApplications(id).then((res) => {
+        const result = res.data.data;
+        if (result) {
+          setCheckApplication(
+            result.find(({ id }) => id === id) ? true : false
+          );
+        }
       });
+    }
+
+    let jobAdvertisementService = new JobAdverTisementService();
+    jobAdvertisementService.getJobAdvertisement(id).then((res) => {
+      setJobAdvertisement(res.data.data);
+      setEmployer(res.data.data.employer);
+      setjobPosition(res.data.data.jobPosition);
+      setCity(res.data.data.city);
+    });
   }, []);
+
+  function addApplication(employerId, jobSeekerId, jobAdvertisementId) {
+    let applicationService = new ApplicationService();
+    applicationService
+      .add(employerId, jobSeekerId, jobAdvertisementId)
+      .then(() => {
+        history.push("/");
+        Alert.success("Başvurunuz alındı.");
+      });
+  }
 
   return (
     <div className="show-grid" style={{ marginBottom: 50 }}>
@@ -81,9 +103,16 @@ export default function JobDetails() {
                 {jobAdvertisement.applicationDeadline}
               </p>
             </div>
-            {userItem.length > 0 && userItem[0].userType === "jobSeeker"? (
+            {userItem.length > 0 &&
+            userItem[0].userType === "jobSeeker" &&
+            checkApplication === false ? (
               <div style={{ float: "right" }}>
-                <Button style={{}} color="green">
+                <Button
+                  onClick={() =>
+                    addApplication(employer.id, userItem[0].user.id, id)
+                  }
+                  color="green"
+                >
                   <Icon icon="hand-o-right" /> BAŞVUR
                 </Button>
               </div>

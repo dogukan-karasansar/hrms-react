@@ -31,7 +31,7 @@ const Dashboard = () => {
             <Route path="/isler/:id" component={JobDetails} />
             <Route path="/isverenler/:id" component={EmployerDetail} />
             <Route exact path="/giris-yap" component={Login} />
-            <Route exact path="/kayit-ol" component={Register} />
+            <Route path="/kayit-ol" component={Register} />
           </Grid.Column>
         </Grid.Row>
       </Grid>
