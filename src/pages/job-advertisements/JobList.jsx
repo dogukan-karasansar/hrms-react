@@ -7,6 +7,8 @@ import JobAdvertisementService from "../../services/job-advertisements/JobAdvert
 
 export default function JobList() {
   const [jobs, setJobs] = useState([]);
+  const [currentPage, setcurrentPage] = useState(1);
+  const [listQuantity, setlistQuantity] = useState(10);
 
   useEffect(() => {
     let jobAdvertisementService = new JobAdvertisementService();
@@ -15,15 +17,22 @@ export default function JobList() {
       .then((res) => setJobs(res.data.data));
   }, []);
 
+  const indexOfLastJob = currentPage * listQuantity;
+  const indexOfFirstJob = indexOfLastJob - listQuantity;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
   return (
-    <Grid >
-      <Grid.Row style={{marginBottom: 100}}>
-        <Grid.Column style={{marginTop: 10}} width={4}>
-          <Filter />
+    <Grid>
+      <Grid.Row style={{ marginBottom: 100 }}>
+        <Grid.Column style={{ marginTop: 10 }} width={4}>
+          <Filter
+            listQuantity={listQuantity}
+            setlistQuantity={setlistQuantity}
+          />
         </Grid.Column>
         <Grid.Column width={12}>
           <Row>
-            {jobs.map((job) => (
+            {currentJobs.map((job) => (
               <Link to={`/isler/${job.id}`} key={job.id}>
                 <Col
                   className="jobs-card"
