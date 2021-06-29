@@ -9,17 +9,28 @@ export default function JobList() {
   const [jobs, setJobs] = useState([]);
   const [currentPage, setcurrentPage] = useState(1);
   const [listQuantity, setlistQuantity] = useState(10);
+  const [filterCity, setfilterCity] = useState(null);
+  const [filterRunTime, setfilterRunTime] = useState(null);
 
   useEffect(() => {
     let jobAdvertisementService = new JobAdvertisementService();
-    jobAdvertisementService
-      .getJobAdvertisements()
-      .then((res) => setJobs(res.data.data));
+
+    jobAdvertisementService.getJobAdvertisements().then((res) => {
+      setJobs(res.data.data);
+    });
   }, []);
 
   const indexOfLastJob = currentPage * listQuantity;
   const indexOfFirstJob = indexOfLastJob - listQuantity;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = jobs
+    .slice(indexOfFirstJob, indexOfLastJob)
+    .filter((job) =>
+      filterCity != null
+        ? job.city.cityName === filterCity
+        : filterRunTime != null
+        ? job.runtime === filterRunTime
+        : jobs
+    );
 
   return (
     <Grid>
@@ -28,6 +39,8 @@ export default function JobList() {
           <Filter
             listQuantity={listQuantity}
             setlistQuantity={setlistQuantity}
+            setfilterCity={setfilterCity}
+            setfilterRunTime={setfilterRunTime}
           />
         </Grid.Column>
         <Grid.Column width={12}>
