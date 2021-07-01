@@ -9,7 +9,7 @@ export default function SignedIn({ signOut }) {
   const { userItem } = useSelector((state) => state.user);
 
   return (
-    <div style={{ position: "relative", right: 50, marginTop: -10 }}>
+    <div style={{ position: "relative", right: 100, marginTop: -10 }}>
       <Dropdown
         noCaret
         icon={
@@ -18,12 +18,17 @@ export default function SignedIn({ signOut }) {
           ) : (
             <Avatar
               src="https://404.error"
-              alt={userItem[0].user.user.email.slice(0, 2)}
+              alt={
+                userItem[0].userType === "jobSeeker"
+                  ? userItem[0].user.firstName.slice(0, 2)
+                  : userItem[0].userType === "employer"
+                  ? userItem[0].user.companyName.slice(0, 2)
+                  : userItem[0].user.firstName.slice(0, 2)
+              }
             />
           )
         }
       >
-        <Dropdown.Item icon={<Icon icon="info" />}>Bilgilerim</Dropdown.Item>
         {userItem[0].userType === "employer" ? (
           <>
             <Link to={"ilanlarim"}>
@@ -38,11 +43,23 @@ export default function SignedIn({ signOut }) {
             </Link>
           </>
         ) : userItem[0].userType === "jobSeeker" ? (
-          <Dropdown.Item icon={<Icon icon="info" />}>
-            Başvurularım
-          </Dropdown.Item>
+          <>
+            <Link to={"/bilgilerim"}>
+              <Dropdown.Item icon={<Icon icon="info" />}>
+                Bilgilerim
+              </Dropdown.Item>
+            </Link>
+            <Dropdown.Item icon={<Icon icon="info" />}>
+              Başvurularım
+            </Dropdown.Item>
+          </>
         ) : (
           <>
+            <Link to={"/personel-bilgilerim"}>
+              <Dropdown.Item icon={<Icon icon="user" />}>
+                Personel Bilgilerim
+              </Dropdown.Item>
+            </Link>
             <Dropdown.Item icon={<Icon icon="info" />}>İlanlar</Dropdown.Item>
             <Dropdown.Item icon={<Icon icon="info" />}>
               Başvurular
